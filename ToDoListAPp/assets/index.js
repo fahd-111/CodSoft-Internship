@@ -1,0 +1,6 @@
+export {default as StudyGirl} from "../img/StudyGirl.png"
+export {default as ToDoList} from "../img/ToDoList.png"
+export {default as NoTasks} from "../assets/NoTasks.png"
+export {default as Tasks} from "../Screens/Tasks"
+export {default as TaskAddScreen} from "../Screens/TaskAddScreen"
+export {default as OnBoardingScreen } from "../Screens/OnBoardingScreen"
