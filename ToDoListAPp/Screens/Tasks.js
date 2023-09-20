@@ -17,7 +17,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 
 const Tasks = () => {
   const [ToDo, setToDo] = useState('')
-  const [todoList, setTodoList] = useState([])   
+  const [todoList, setTodoList] = useState([])
   const [editMode, setEditMode] = useState(false)
   const [editTaskId, setEditTaskId] = useState(null)
   const [editedTask, setEditedTask] = useState('')
@@ -35,13 +35,13 @@ const Tasks = () => {
       AsyncStorage.getItem('pendingTasks')
         .then((storedTasks) => {
           const parsedTasks = JSON.parse(storedTasks) || []
-                    const FullList = [...parsedTasks, newTask]
+          const FullList = [...parsedTasks, newTask]
 
-                    AsyncStorage.setItem('pendingTasks', JSON.stringify(FullList))
+          AsyncStorage.setItem('pendingTasks', JSON.stringify(FullList))
             .then(() => {
               setTodoList(updatedTodoList)
               setToDo('')
-                          })
+            })
             .catch((error) => {
               console.error('Error saving task: ', error)
             })
@@ -53,18 +53,18 @@ const Tasks = () => {
   }
 
   const HandleDeleteToDo = (id) => {
-        AsyncStorage.getItem('pendingTasks')
+    AsyncStorage.getItem('pendingTasks')
       .then((storedTasks) => {
         const parsedTasks = JSON.parse(storedTasks) || []
 
-                const updateToDoList = todoList.filter((todo) => todo.id !== id)
+        const updateToDoList = todoList.filter((todo) => todo.id !== id)
         const PendingTasks = parsedTasks.filter((task) => task.id !== id)
 
-                AsyncStorage.setItem('pendingTasks', JSON.stringify(PendingTasks))
+        AsyncStorage.setItem('pendingTasks', JSON.stringify(PendingTasks))
           .then(() => {
-                        setTodoList(updateToDoList)
+            setTodoList(updateToDoList)
 
-            
+
           })
           .catch((error) => {
             console.error('Error deleting task: ', error)
@@ -148,12 +148,12 @@ const Tasks = () => {
           <ScrollView style={{ flex: 1 }} scrollEnabled={true}>
             <View style={styles.ListofTasks}>
               {todoList.length === 0 ? (
-                                <Image
+                <Image
                   source={require('../assets/NewToDo.png')}
                   style={styles.emptyListImage}
                 />
               ) : (
-                                <FlatList
+                <FlatList
                   data={todoList}
                   renderItem={tasksToDo}
                   keyExtractor={(item) => item.id}
@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginHorizontal: 15,
     backgroundColor: '#320069',
-    shadowColor: 'black',     shadowOffset: { width: 0, height: 0 },     shadowOpacity: 0.8,     shadowRadius: 2,     paddingTop: 20,
+    shadowColor: 'black', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.8, shadowRadius: 2, paddingTop: 20,
   },
   emptyListImage: {
     width: 200,
@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     backgroundColor: '#320069',
     height: 50,
-    shadowColor: 'black',     shadowOffset: { width: 0, height: -1 },     shadowOpacity: 0.8,     shadowRadius: 3,     paddingTop: 20,
+    shadowColor: 'black', shadowOffset: { width: 0, height: -1 }, shadowOpacity: 0.8, shadowRadius: 3, paddingTop: 20,
   },
   icons: {
     flex: 0.2,
