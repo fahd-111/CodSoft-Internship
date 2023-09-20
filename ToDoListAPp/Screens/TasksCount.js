@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ToDoList } from '../assets';
+import {backgroundImage} from "../assets/index"
 
 const TasksCount = () => {
   const navigation = useNavigation();
@@ -45,43 +45,74 @@ const TasksCount = () => {
   });
 
   return (
+    <ImageBackground source={backgroundImage} style={styles.background}>
     <View style={styles.container}>
-      <Text style={styles.text}>Pending Tasks: {pendingCount}</Text>
-      <Text style={styles.text}>Completed Tasks: {completedCount}</Text>
-
-      <TouchableOpacity
-        style={styles.button}
+      <TouchableOpacity 
+        style={styles.TasksButton}
         onPress={() => navigation.navigate('Tasks')}
       >
-        <Text>Add Task</Text>
+        <Text style={styles.buttonText}>Add a new Task</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={styles.button}
+        style={styles.TasksButton}
         onPress={() => navigation.navigate('PendingTasks')}
       >
-        <Text>View Pending Tasks</Text>
+        <Text style={styles.buttonText}>Pending Tasks: {pendingCount}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={styles.button}
+        style={styles.TasksButton}
         onPress={() => navigation.navigate('CompletedTasks')}
       >
-        <Text>View Completed Tasks</Text>
+        <Text style={styles.buttonText}>Completed Tasks Today: {completedCount}</Text>
       </TouchableOpacity>
     </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+ 
+  background: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    resizeMode:'contain',
+    justifyContent:'flex-end',
   },
-  text: {
+  container:{
+flex:0.4,
+ margin:20,
+ alignContent:'center',
+ paddingBottom:30
+  },
+  TasksButton:{
+    backgroundColor: '#320069',
+    borderRadius: 20,
+    padding:20,
+    margin:20,
+    shadowColor: 'black', // Shadow color
+    shadowOffset: { width: 0, height: 0 }, // Shadow offset (x, y)
+    shadowOpacity: 0.8, // Shadow opacity (0 to 1)
+    shadowRadius: 2, // Shadow radius
+    paddingTop: 20,
+  },
+  PendingTasks:{
+    backgroundColor: '#320069',
+    borderRadius: 5,
+    padding:20,
+    margin:20
+  },
+  completedTasks:{
+    backgroundColor: '#320069',
+    borderRadius: 20,
+    padding:20,
+    margin:20
+  },
+  buttonText: {
     fontSize: 20,
     marginBottom: 10,
+    color:'white',
+    textAlign:'center'
   },
   button: {
     backgroundColor: '#7836ff',
