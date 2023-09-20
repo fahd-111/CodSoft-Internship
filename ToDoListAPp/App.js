@@ -9,8 +9,6 @@ import { Tasks } from './assets';
 
 const Stack = createStackNavigator();
 
-
-
 export default function App() {
   return (
     <>
