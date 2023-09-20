@@ -133,7 +133,6 @@ const PendingTasks = () => {
 
         const updatedList = [...pendingTasks];
 
-
         updatedList[taskIndex].title = editedTask;
 
 
@@ -179,6 +178,8 @@ const PendingTasks = () => {
         <BouncyCheckbox
           size={25}
           fillColor="red"
+          text={item.title}
+          textStyle={styles.descriptionText}
           unfillColor="#FFFFFF"
           iconStyle={{ borderColor: "red" }}
           innerIconStyle={{ borderWidth: 1 }}
@@ -186,7 +187,7 @@ const PendingTasks = () => {
           onPress={() => handleCheckboxChange(item.id, !isChecked)}
         />
 
-        <Text style={styles.descriptionText}>{item.title}</Text>
+        {/* <Text style={styles.descriptionText}></Text> */}
         <View style={styles.icons}>
 
           <TouchableOpacity onPress={() => startEditing(item.id, item.title)}>
