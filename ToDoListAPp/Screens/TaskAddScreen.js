@@ -1,4 +1,3 @@
-// Import necessary dependencies
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -12,8 +11,7 @@ const TaskAddScreen = () => {
 
   const saveEditedTask = () => {
     if (editedTask) {
-      // Pass the edited task back to the Tasks screen
-      console.log(editedTask)
+      // console.log(editedTask)
       navigation.goBack({
         
         editedTask: { id: taskId, title: editedTask },

@@ -21,82 +21,78 @@ const PendingTasks = () => {
   const [editMode, setEditMode] = useState(false);
   const [editTaskId, setEditTaskId] = useState(null);
   const [editedTask, setEditedTask] = useState('');
-  const [pendingTasks, setPendingTasks] = useState([]); // Use pendingTasks state for rendering
+  const [pendingTasks, setPendingTasks] = useState([]); 
   const [isChecked , setChecked] = useState(false)
 
-  useEffect(() => {
-    // Load the pending tasks from AsyncStorage when the component mounts
-    
+  useEffect(() => {   
     loadPendingTasks();
   }, []);
 
-  const [isUpdating, setIsUpdating] = useState(false); // State to track whether an update is in progress
+  const [isUpdating, setIsUpdating] = useState(false); 
 
-  // Define a function to handle the checkbox change
   const handleCheckboxChange = (id, isChecked) => {
-    setIsUpdating(true); // Set the update state to true
-  
-    // Add a 1-second delay before proceeding
+    setIsUpdating(true); 
+
     setTimeout(() => {
-      // Find the task by id in the pendingTasks array
+      
       const taskIndex = pendingTasks.findIndex((task) => task.id === id);
   
       if (taskIndex !== -1) {
-        // Remove the task from the pendingTasks array
+        
         const updatedPendingTasks = [...pendingTasks];
         updatedPendingTasks.splice(taskIndex, 1);
   
-        // Update the pendingTasks list in AsyncStorage
+        
         AsyncStorage.setItem('pendingTasks', JSON.stringify(updatedPendingTasks))
           .then(() => {
-            // Update the state with the updated pending tasks list
+        
             setPendingTasks(updatedPendingTasks);
   
             if (isChecked) {
-              // Load the existing completedTasks from AsyncStorage
+        
               AsyncStorage.getItem('completedTasks')
                 .then((storedTasks) => {
                   const parsedTasks = JSON.parse(storedTasks) || [];
   
-                  // Create a new completed task object
+        
                   const completedTask = {
                     id: Date.now().toString(),
                     title: pendingTasks[taskIndex].title,
                   };
   
-                  // Add the completed task to the completedTasks array
+        
                   parsedTasks.push(completedTask);
   
-                  // Update the completedTasks list in AsyncStorage
+        
                   AsyncStorage.setItem('completedTasks', JSON.stringify(parsedTasks))
                     .then(() => {
-                      // Do any additional updates or state changes you need
-                      setIsUpdating(false); // Set the update state back to false
+        
+                      setIsUpdating(false); 
                     })
                     .catch((error) => {
                       console.error('Error adding task to completed tasks: ', error);
-                      setIsUpdating(false); // Set the update state back to false in case of an error
+                      setIsUpdating(false); 
                     });
                 })
                 .catch((error) => {
                   console.error('Error loading completed tasks: ', error);
-                  setIsUpdating(false); // Set the update state back to false in case of an error
+                  setIsUpdating(false); 
                 });
             } else {
-              setIsUpdating(false); // Set the update state back to false if the checkbox is not checked
+              setIsUpdating(false); 
             }
           })
           .catch((error) => {
             console.error('Error updating pending tasks: ', error);
-            setIsUpdating(false); // Set the update state back to false in case of an error
+            setIsUpdating(false); 
           });
       }
-    }, 1000); // Wait for 1 second before proceeding
+    }, 1000);
   };
 
   const loadPendingTasks = async () => {
     try {
-      // Load the "pendingTasks" from AsyncStorage
+      
       const storedTasks = await AsyncStorage.getItem('pendingTasks');
       if (storedTasks) {
         const parsedTasks = JSON.parse(storedTasks);
@@ -108,13 +104,13 @@ const PendingTasks = () => {
   };
 
   const HandleDeleteToDo = (id) => {
-    // Filter out the task with the matching id
+    
     const updatedTasks = pendingTasks.filter((task) => task.id !== id);
 
-    // Update the pendingTasks list in AsyncStorage
+    
     AsyncStorage.setItem('pendingTasks', JSON.stringify(updatedTasks))
       .then(() => {
-        // Update the state with the updated task list
+        
         setPendingTasks(updatedTasks);
       })
       .catch((error) => {
@@ -137,20 +133,20 @@ const PendingTasks = () => {
 
   const saveEditedTask = () => {
     if (editedTask) {
-      // Find the task by id in the pendingTasks array
+      
       const taskIndex = pendingTasks.findIndex((task) => task.id === editTaskId);
   
       if (taskIndex !== -1) {
-        // Create a copy of the pendingTasks array
+        
         const updatedList = [...pendingTasks];
         
-        // Update the task's title in the copy
+        
         updatedList[taskIndex].title = editedTask;
   
-        // Update the pendingTasks list in AsyncStorage
+        
         AsyncStorage.setItem('pendingTasks', JSON.stringify(updatedList))
           .then(() => {
-            // Update the state with the updated pending tasks list
+            
             setPendingTasks(updatedList);
             cancelEditing();
           })
@@ -193,8 +189,8 @@ const PendingTasks = () => {
           unfillColor="#FFFFFF"
           iconStyle={{ borderColor: "red" }}
           innerIconStyle={{ borderWidth: 1 }}
-          isChecked={isChecked} // Pass the checkbox state here
-          onPress={() => handleCheckboxChange(item.id, !isChecked)} // Call handleCheckboxChange on press
+          isChecked={isChecked} 
+          onPress={() => handleCheckboxChange(item.id, !isChecked)} 
         />
 
         <Text style={styles.descriptionText}>{item.title}</Text>
@@ -221,13 +217,13 @@ const PendingTasks = () => {
           <ScrollView style={{ flex: 1 }} scrollEnabled={true}>
             <View style={styles.ListofTasks}>
               {pendingTasks.length === 0 ? (
-                // Display an image when there are no pending tasks
+                
                 <Image
                   source={require('../assets/TasksCompleted.png')}
                   style={styles.emptyListImage}
                 />
               ) : (
-                // Display the FlatList when there are tasks
+                
                 <FlatList
                   data={pendingTasks}
                   renderItem={tasksToDo}
@@ -258,10 +254,10 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginHorizontal: 15,
     backgroundColor: '#320069',
-    shadowColor: 'black', // Shadow color
-    shadowOffset: { width: 0, height: 0 }, // Shadow offset (x, y)
-    shadowOpacity: 0.8, // Shadow opacity (0 to 1)
-    shadowRadius: 2, // Shadow radius
+    shadowColor: 'black', 
+    shadowOffset: { width: 0, height: 0 }, 
+    shadowOpacity: 0.8, 
+    shadowRadius: 2, 
     paddingTop: 20,
   },
   emptyListImage: {
@@ -292,10 +288,10 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     backgroundColor: '#320069',
     height: 50,
-    shadowColor: 'black', // Shadow color
-    shadowOffset: { width: 0, height: -1 }, // Shadow offset (x, y)
-    shadowOpacity: 0.8, // Shadow opacity (0 to 1)
-    shadowRadius: 3, // Shadow radius
+    shadowColor: 'black', 
+    shadowOffset: { width: 0, height: -1 }, 
+    shadowOpacity: 0.8, 
+    shadowRadius: 3, 
     paddingTop: 20,
   },
   icons: {

@@ -2,10 +2,10 @@ import { View, Text, StyleSheet,Image, Pressable} from 'react-native'
 import React from 'react'
 import Swiper from 'react-native-swiper';
 import { StudyGirl,ToDoList } from '../assets/index';
-import { useNavigation } from '@react-navigation/native'; // Import useNavigation
+import { useNavigation } from '@react-navigation/native'; 
 
 const OnBoardingScreen = () => {
-  const navigation = useNavigation(); // Access the navigation object
+  const navigation = useNavigation(); 
 
   return (
     <View style={styles.fullScreen}>
@@ -99,9 +99,9 @@ const styles = StyleSheet.create({
     
   },
   buttonText: {
-    color: 'black', // Text color
-    fontSize: 20, // Font size
-    textAlign: 'center', // Text alignment
+    color: 'black', 
+    fontSize: 20, 
+    textAlign: 'center', 
     
   },
   

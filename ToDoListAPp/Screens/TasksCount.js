@@ -39,7 +39,6 @@ const TasksCount = () => {
       });
   };
   
-  // Use useFocusEffect to load tasks count when the screen is focused
   useFocusEffect(() => {
     loadTasksCount();
   });
@@ -90,10 +89,10 @@ flex:0.4,
     borderRadius: 20,
     padding:20,
     margin:20,
-    shadowColor: 'black', // Shadow color
-    shadowOffset: { width: 0, height: 0 }, // Shadow offset (x, y)
-    shadowOpacity: 0.8, // Shadow opacity (0 to 1)
-    shadowRadius: 2, // Shadow radius
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
     paddingTop: 20,
   },
   PendingTasks:{

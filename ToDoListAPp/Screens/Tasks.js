@@ -12,9 +12,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { NoTasks } from '../assets/index';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const Tasks = () => {

@@ -27,7 +27,7 @@ const CompletedTask = () => {
   const loadcompletedTask = async () => {
     try {
       
-      // Load the "CompletedTask" from AsyncStorage
+      
       const storedTasks = await AsyncStorage.getItem('completedTasks');
       if (storedTasks) {
         const parsedTasks = JSON.parse(storedTasks);
@@ -39,13 +39,13 @@ const CompletedTask = () => {
   };
 
   const HandleDeleteToDo = (id) => {
-    // Filter out the task with the matching id
+    
     const updatedTasks = CompletedTask.filter((task) => task.id !== id);
 
-    // Update the CompletedTask list in AsyncStorage
+    
     AsyncStorage.setItem('completedTasks', JSON.stringify(updatedTasks))
       .then(() => {
-        // Update the state with the updated task list
+        
         setcompletedTask(updatedTasks);
       })
       .catch((error) => {
@@ -78,13 +78,13 @@ const CompletedTask = () => {
           <ScrollView style={{ flex: 1 }} scrollEnabled={true}>
             <View style={styles.ListofTasks}>
               {CompletedTask.length === 0 ? (
-                // Display an image when there are no Completed tasks
+                
                 <Image
                   source={require('../assets/NoTasks.png')}
                   style={styles.emptyListImage}
                 />
               ) : (
-                // Display the FlatList when there are tasks
+                
                 <FlatList
                   data={CompletedTask}
                   renderItem={tasksToDo}
@@ -115,10 +115,10 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginHorizontal: 15,
     backgroundColor: '#320069',
-    shadowColor: 'black', // Shadow color
-    shadowOffset: { width: 0, height: 0 }, // Shadow offset (x, y)
-    shadowOpacity: 0.8, // Shadow opacity (0 to 1)
-    shadowRadius: 2, // Shadow radius
+    shadowColor: 'black', 
+    shadowOffset: { width: 0, height: 0 }, 
+    shadowOpacity: 0.8, 
+    shadowRadius: 2, 
     paddingTop: 20,
   },
   emptyListImage: {
@@ -149,10 +149,10 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     backgroundColor: '#320069',
     height: 50,
-    shadowColor: 'black', // Shadow color
-    shadowOffset: { width: 0, height: -1 }, // Shadow offset (x, y)
-    shadowOpacity: 0.8, // Shadow opacity (0 to 1)
-    shadowRadius: 3, // Shadow radius
+    shadowColor: 'black', 
+    shadowOffset: { width: 0, height: -1 }, 
+    shadowOpacity: 0.8, 
+    shadowRadius: 3, 
     paddingTop: 20,
   },
   icons: {
