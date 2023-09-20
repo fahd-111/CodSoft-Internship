@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import {
   View,
   Image,
@@ -10,111 +10,96 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   TouchableOpacity,
-} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { ScrollView } from 'react-native-gesture-handler';
+} from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import Icon from 'react-native-vector-icons/FontAwesome'
+import { ScrollView } from 'react-native-gesture-handler'
 
 const Tasks = () => {
-  const [ToDo, setToDo] = useState('');
-  const [todoList, setTodoList] = useState([]); // Initialize as an empty array
-  const [editMode, setEditMode] = useState(false);
-  const [editTaskId, setEditTaskId] = useState(null);
-  const [editedTask, setEditedTask] = useState('');
+  const [ToDo, setToDo] = useState('')
+  const [todoList, setTodoList] = useState([])   
+  const [editMode, setEditMode] = useState(false)
+  const [editTaskId, setEditTaskId] = useState(null)
+  const [editedTask, setEditedTask] = useState('')
 
   const addTask = () => {
     if (ToDo && ((/[a-zA-Z]/.test(ToDo)) || (/\d/.test(ToDo)))) {
       const newTask = {
         id: Date.now().toString(),
         title: ToDo,
-        completed:false
-      };
-  
-      const updatedTodoList = [...todoList, newTask];
-  
-      // Update the count of pending tasks
-      
-  
+        completed: false
+      }
+
+      const updatedTodoList = [...todoList, newTask]
+
       AsyncStorage.getItem('pendingTasks')
-      .then((storedTasks) => {
-        const parsedTasks = JSON.parse(storedTasks) || [];
-        // Add the new task to the pendingTasks list
-        const FullList = [...parsedTasks, newTask];
+        .then((storedTasks) => {
+          const parsedTasks = JSON.parse(storedTasks) || []
+                    const FullList = [...parsedTasks, newTask]
 
-
-        // Update the pendingTasks list in AsyncStorage
-        AsyncStorage.setItem('pendingTasks', JSON.stringify(FullList))
-          .then(() => {
-            setTodoList(updatedTodoList)
-            setToDo('');
-            // Perform any other actions you need
-          })
-          .catch((error) => {
-            console.error('Error saving task: ', error);
-          });
-      })
-      .catch((error) => {
-        console.error('Error loading tasks: ', error);
-      });
-  }
-};
-  
-const HandleDeleteToDo = (id) => {
-  // Load the existing pendingTasks from AsyncStorage
-  AsyncStorage.getItem('pendingTasks')
-    .then((storedTasks) => {
-      const parsedTasks = JSON.parse(storedTasks) || [];
-      
-      // Filter out the task with the matching id
-      const updateToDoList = todoList.filter((todo) => todo.id !== id);
-      const PendingTasks = parsedTasks.filter((task) => task.id !== id);
-
-      // Update the pendingTasks list in AsyncStorage
-      AsyncStorage.setItem('pendingTasks', JSON.stringify(PendingTasks))
-        .then(() => {
-          // Update the state with the updated task list
-          setTodoList(updateToDoList);
-
-          // Update the count of pending tasks
-          
-
-          // Update the count of pending tasks in AsyncStorage
-
+                    AsyncStorage.setItem('pendingTasks', JSON.stringify(FullList))
+            .then(() => {
+              setTodoList(updatedTodoList)
+              setToDo('')
+                          })
+            .catch((error) => {
+              console.error('Error saving task: ', error)
+            })
         })
         .catch((error) => {
-          console.error('Error deleting task: ', error);
-        });
-    })
-    .catch((error) => {
-      console.error('Error loading tasks: ', error);
-    });
-};
-  
+          console.error('Error loading tasks: ', error)
+        })
+    }
+  }
+
+  const HandleDeleteToDo = (id) => {
+        AsyncStorage.getItem('pendingTasks')
+      .then((storedTasks) => {
+        const parsedTasks = JSON.parse(storedTasks) || []
+
+                const updateToDoList = todoList.filter((todo) => todo.id !== id)
+        const PendingTasks = parsedTasks.filter((task) => task.id !== id)
+
+                AsyncStorage.setItem('pendingTasks', JSON.stringify(PendingTasks))
+          .then(() => {
+                        setTodoList(updateToDoList)
+
+            
+          })
+          .catch((error) => {
+            console.error('Error deleting task: ', error)
+          })
+      })
+      .catch((error) => {
+        console.error('Error loading tasks: ', error)
+      })
+  }
+
   const startEditing = (id, title) => {
-    setEditMode(true);
-    setEditTaskId(id);
-    setEditedTask(title);
-  };
+    setEditMode(true)
+    setEditTaskId(id)
+    setEditedTask(title)
+  }
 
   const cancelEditing = () => {
-    setEditMode(false);
-    setEditTaskId(null);
-    setEditedTask('');
-  };
+    setEditMode(false)
+    setEditTaskId(null)
+    setEditedTask('')
+  }
 
   const saveEditedTask = () => {
     if (editedTask) {
       const updatedList = todoList.map((task) => {
         if (task.id === editTaskId) {
-          return { ...task, title: editedTask };
+          return { ...task, title: editedTask }
         }
-        return task;
-      });
+        return task
+      })
 
-      setTodoList(updatedList);
-      cancelEditing();
+      setTodoList(updatedList)
+      cancelEditing()
     }
-  };
+  }
 
   const tasksToDo = ({ item }) => {
     if (editMode && editTaskId === item.id) {
@@ -135,7 +120,7 @@ const HandleDeleteToDo = (id) => {
             </TouchableOpacity>
           </View>
         </View>
-      );
+      )
     }
 
     return (
@@ -150,8 +135,8 @@ const HandleDeleteToDo = (id) => {
           </TouchableOpacity>
         </View>
       </View>
-    );
-  };
+    )
+  }
 
   return (
     <KeyboardAvoidingView
@@ -163,14 +148,12 @@ const HandleDeleteToDo = (id) => {
           <ScrollView style={{ flex: 1 }} scrollEnabled={true}>
             <View style={styles.ListofTasks}>
               {todoList.length === 0 ? (
-                // Display an image when the todoList is empty
-                <Image
+                                <Image
                   source={require('../assets/NewToDo.png')}
                   style={styles.emptyListImage}
                 />
               ) : (
-                // Display the FlatList when there are tasks
-                <FlatList
+                                <FlatList
                   data={todoList}
                   renderItem={tasksToDo}
                   keyExtractor={(item) => item.id}
@@ -196,10 +179,10 @@ const HandleDeleteToDo = (id) => {
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
-  );
-};
+  )
+}
 
-export default Tasks;
+export default Tasks
 
 const styles = StyleSheet.create({
   container: {
@@ -216,11 +199,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginHorizontal: 15,
     backgroundColor: '#320069',
-    shadowColor: 'black', // Shadow color
-    shadowOffset: { width: 0, height: 0 }, // Shadow offset (x, y)
-    shadowOpacity: 0.8, // Shadow opacity (0 to 1)
-    shadowRadius: 2, // Shadow radius
-    paddingTop: 20,
+    shadowColor: 'black',     shadowOffset: { width: 0, height: 0 },     shadowOpacity: 0.8,     shadowRadius: 2,     paddingTop: 20,
   },
   emptyListImage: {
     width: 200,
@@ -250,11 +229,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     backgroundColor: '#320069',
     height: 50,
-    shadowColor: 'black', // Shadow color
-    shadowOffset: { width: 0, height: -1 }, // Shadow offset (x, y)
-    shadowOpacity: 0.8, // Shadow opacity (0 to 1)
-    shadowRadius: 3, // Shadow radius
-    paddingTop: 20,
+    shadowColor: 'black',     shadowOffset: { width: 0, height: -1 },     shadowOpacity: 0.8,     shadowRadius: 3,     paddingTop: 20,
   },
   icons: {
     flex: 0.2,
@@ -311,4 +286,4 @@ const styles = StyleSheet.create({
     color: 'white',
     justifyContent: 'center',
   },
-});
+})

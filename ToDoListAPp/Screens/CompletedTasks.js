@@ -16,18 +16,14 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const CompletedTask = () => {
-  const [CompletedTask, setcompletedTask] = useState([]); 
+  const [CompletedTask, setcompletedTask] = useState([]);
 
-  useEffect(() => {    
+  useEffect(() => {
     loadcompletedTask();
   }, []);
 
-
-
   const loadcompletedTask = async () => {
     try {
-      
-      
       const storedTasks = await AsyncStorage.getItem('completedTasks');
       if (storedTasks) {
         const parsedTasks = JSON.parse(storedTasks);
@@ -39,20 +35,18 @@ const CompletedTask = () => {
   };
 
   const HandleDeleteToDo = (id) => {
-    
+
     const updatedTasks = CompletedTask.filter((task) => task.id !== id);
 
-    
     AsyncStorage.setItem('completedTasks', JSON.stringify(updatedTasks))
       .then(() => {
-        
+
         setcompletedTask(updatedTasks);
       })
       .catch((error) => {
         console.error('Error deleting task: ', error);
       });
   };
-
 
   const tasksToDo = ({ item }) => {
     return (
@@ -78,13 +72,13 @@ const CompletedTask = () => {
           <ScrollView style={{ flex: 1 }} scrollEnabled={true}>
             <View style={styles.ListofTasks}>
               {CompletedTask.length === 0 ? (
-                
+
                 <Image
                   source={require('../assets/NoTasks.png')}
                   style={styles.emptyListImage}
                 />
               ) : (
-                
+
                 <FlatList
                   data={CompletedTask}
                   renderItem={tasksToDo}
@@ -115,10 +109,10 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginHorizontal: 15,
     backgroundColor: '#320069',
-    shadowColor: 'black', 
-    shadowOffset: { width: 0, height: 0 }, 
-    shadowOpacity: 0.8, 
-    shadowRadius: 2, 
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
     paddingTop: 20,
   },
   emptyListImage: {
@@ -149,10 +143,10 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     backgroundColor: '#320069',
     height: 50,
-    shadowColor: 'black', 
-    shadowOffset: { width: 0, height: -1 }, 
-    shadowOpacity: 0.8, 
-    shadowRadius: 3, 
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: -1 },
+    shadowOpacity: 0.8,
+    shadowRadius: 3,
     paddingTop: 20,
   },
   icons: {

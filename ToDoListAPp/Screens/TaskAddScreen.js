@@ -13,7 +13,6 @@ const TaskAddScreen = () => {
     if (editedTask) {
       // console.log(editedTask)
       navigation.goBack({
-        
         editedTask: { id: taskId, title: editedTask },
       });
     }
